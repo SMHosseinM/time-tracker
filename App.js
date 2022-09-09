@@ -2,30 +2,62 @@ import React from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import EditableTimer from './components/EditableTimer';
 import ToggleableTimerForm from './components/ToggleableTimerForm';
+import uuidv4 from 'react-uuid';
+import { newTimer } from './utils/TimerUtils';
 
 export default class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      timers: [
+        {
+          title: 'Mow the lawn',
+          project: 'House Chores',
+          id: uuidv4(),
+          elapsed: 5456099,
+          isRunning: true,
+        },
+        {
+          title: 'Bake squash',
+          project: 'Kitchen Chores',
+          id: uuidv4(),
+          elapsed: 1273998,
+          isRunning: false,
+        },
+      ],
+    }
+  }
+
+  handleFormSubmit = (item) => {
+    const { timers } = this.state;
+
+    this.setState({
+      // timers: timers.push(newTimer(item)),
+      timers: [newTimer(item), ...timers],
+    })
+  }
+
   render() {
+    const { timers } = this.state;
+
     return (
       <View style={styles.appContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Timers</Text>
         </View>
         <ScrollView style={styles.timerList}>
-          <ToggleableTimerForm isOpen={true} />
-          <EditableTimer
-            id="1"
-            title="Mow the lawn"
-            project="House Chores"
-            elapsed="8986300"
-            isRunning
-          />
-          <EditableTimer
-            id="2"
-            title="Bake squash"
-            project="Kitchen Chores"
-            elapsed="3890985"
-            editFormOpen
-          />
+          <ToggleableTimerForm onFormSubmit={this.handleFormSubmit} />
+          {timers.map(({ title, project, id, elapsed, isRunning }) => (
+            <EditableTimer
+              key={id}
+              id={id}
+              title={title}
+              project={project}
+              elapsed={elapsed}
+              isRunning={isRunning}
+            />
+          ))}
         </ScrollView>
       </View>
     );
