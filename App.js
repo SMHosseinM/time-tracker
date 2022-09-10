@@ -31,11 +31,13 @@ export default class App extends React.Component {
 
   handleFormSubmit = (item) => {
     const { timers } = this.state;
+    let isUpdate = false;
 
     this.setState({
       timers: timers.map(timer => {
         if (timer.id === item.id) {
           const { title, project } = item;
+          isUpdate = !isUpdate;
 
           return {
             ...item,
@@ -45,6 +47,20 @@ export default class App extends React.Component {
         }
         return timer;
       })
+    })
+
+    if (!isUpdate) {
+      this.setState({
+        timers: [item, ...timers]
+      })
+    }
+  }
+
+  handleFormRemove = (id) => {
+    const { timers } = this.state;
+
+    this.setState({
+      timers: timers.filter(timer => timer.id !== id),
     })
   }
 
@@ -67,6 +83,7 @@ export default class App extends React.Component {
               elapsed={elapsed}
               isRunning={isRunning}
               onFormSubmit={this.handleFormSubmit}
+              onFormRemove={this.handleFormRemove}
             />
           ))}
         </ScrollView>

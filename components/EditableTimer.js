@@ -14,7 +14,6 @@ export default class EditableTimer extends Component {
   };
 
   handleFormClose = () => {
-    console.log('here')
     this.closeForm();
   };
 
@@ -26,11 +25,15 @@ export default class EditableTimer extends Component {
 
   closeForm = () => {
     this.setState({ editFormOpen: false });
-    console.log('hello')
   };
 
   openForm = () => {
     this.setState({ editFormOpen: true });
+  };
+
+  handleRemovePress = (id) => {
+    const { onFormRemove } = this.props;
+    onFormRemove(id);
   };
 
   render() {
@@ -57,6 +60,7 @@ export default class EditableTimer extends Component {
         elapsed={elapsed}
         isRunning={isRunning}
         onEditPress={this.handleEditPress}
+        onRemovePress={this.handleRemovePress}
       />
     );
   }
