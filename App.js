@@ -33,8 +33,18 @@ export default class App extends React.Component {
     const { timers } = this.state;
 
     this.setState({
-      // timers: timers.push(newTimer(item)),
-      timers: [newTimer(item), ...timers],
+      timers: timers.map(timer => {
+        if (timer.id === item.id) {
+          const { title, project } = item;
+
+          return {
+            ...item,
+            title,
+            project
+          };
+        }
+        return timer;
+      })
     })
   }
 
@@ -56,6 +66,7 @@ export default class App extends React.Component {
               project={project}
               elapsed={elapsed}
               isRunning={isRunning}
+              onFormSubmit={this.handleFormSubmit}
             />
           ))}
         </ScrollView>

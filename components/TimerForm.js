@@ -72,7 +72,7 @@ export default class TimerForm extends Component {
         </View>
         <View style={styles.buttonGroup}>
           <TimerButton small color="#21BA45" title={submitText} onPress={this.handleSubmit} />
-          <TimerButton small color="#DB2828" title="Cancel" OnPress={onFormClose} />
+          <TimerButton small color="#DB2828" title="Cancel" onPress={onFormClose} />
         </View>
       </View >
     )
