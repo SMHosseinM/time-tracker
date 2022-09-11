@@ -32,12 +32,19 @@ export default class EditableTimer extends Component {
   };
 
   handleRemovePress = (id) => {
-    const { onFormRemove } = this.props;
-    onFormRemove(id);
+    const { onRemovePress } = this.props;
+    onRemovePress(id);
   };
 
   render() {
-    const { title, project, id, elapsed, isRunning } = this.props
+    const {
+      title,
+      project,
+      id,
+      elapsed,
+      isRunning,
+      onStartPress,
+      onStopPress, } = this.props
     const { editFormOpen } = this.state
 
     if (editFormOpen) {
@@ -61,6 +68,8 @@ export default class EditableTimer extends Component {
         isRunning={isRunning}
         onEditPress={this.handleEditPress}
         onRemovePress={this.handleRemovePress}
+        onStartPress={onStartPress}
+        onStopPress={onStopPress}
       />
     );
   }

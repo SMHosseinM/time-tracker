@@ -16,7 +16,7 @@ export default class App extends React.Component {
           project: 'House Chores',
           id: uuidv4(),
           elapsed: 5456099,
-          isRunning: true,
+          isRunning: false,
         },
         {
           title: 'Bake squash',
@@ -27,6 +27,28 @@ export default class App extends React.Component {
         },
       ],
     }
+  }
+
+  componentDidMount() {
+    const INTERVAL = 1000;
+
+    this.intervalId = setInterval(() => {
+      const { timers } = this.state;
+
+      this.setState({
+        timers: timers.map(timer => {
+          const { elapsed, isRunning } = timer
+          return {
+            ...timer,
+            elapsed: isRunning ? elapsed + INTERVAL : elapsed,
+          }
+        })
+      })
+    }, INTERVAL)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
 
   handleFormSubmit = (item) => {
@@ -64,6 +86,25 @@ export default class App extends React.Component {
     })
   }
 
+  toggleTimer = (timerId) => {
+
+    this.setState(prevState => {
+      const { timers } = prevState;
+
+      return {
+        timers: timers.map(timer => {
+          if (timer.id === timerId) {
+            return {
+              ...timer,
+              isRunning: !(timer.isRunning),
+            }
+          }
+          return timer;
+        })
+      }
+    })
+  }
+
   render() {
     const { timers } = this.state;
 
@@ -83,7 +124,9 @@ export default class App extends React.Component {
               elapsed={elapsed}
               isRunning={isRunning}
               onFormSubmit={this.handleFormSubmit}
-              onFormRemove={this.handleFormRemove}
+              onRemovePress={this.handleFormRemove}
+              onStartPress={this.toggleTimer}
+              onStopPress={this.toggleTimer}
             />
           ))}
         </ScrollView>
