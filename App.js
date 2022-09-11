@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, KeyboardAvoidingView, } from 'react-native';
 import EditableTimer from './components/EditableTimer';
 import ToggleableTimerForm from './components/ToggleableTimerForm';
 import uuidv4 from 'react-uuid';
@@ -113,29 +113,37 @@ export default class App extends React.Component {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Timers</Text>
         </View>
-        <ScrollView style={styles.timerList}>
-          <ToggleableTimerForm onFormSubmit={this.handleFormSubmit} />
-          {timers.map(({ title, project, id, elapsed, isRunning }) => (
-            <EditableTimer
-              key={id}
-              id={id}
-              title={title}
-              project={project}
-              elapsed={elapsed}
-              isRunning={isRunning}
-              onFormSubmit={this.handleFormSubmit}
-              onRemovePress={this.handleFormRemove}
-              onStartPress={this.toggleTimer}
-              onStopPress={this.toggleTimer}
-            />
-          ))}
-        </ScrollView>
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={styles.timerListContainer}
+        >
+          <ScrollView style={styles.timerList}>
+            <ToggleableTimerForm onFormSubmit={this.handleFormSubmit} />
+            {timers.map(({ title, project, id, elapsed, isRunning }) => (
+              <EditableTimer
+                key={id}
+                id={id}
+                title={title}
+                project={project}
+                elapsed={elapsed}
+                isRunning={isRunning}
+                onFormSubmit={this.handleFormSubmit}
+                onRemovePress={this.handleFormRemove}
+                onStartPress={this.toggleTimer}
+                onStopPress={this.toggleTimer}
+              />
+            ))}
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  timerListContainer: {
+    flex: 1,
+  },
   appContainer: {
     flex: 1,
   },
