@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
 import TimerButton from './TimerButton';
+// import uuidv4 from 'react-uuid';
 
 export default class TimerForm extends Component {
 
-  static defaultProps = {
-    id: null,
-    title: '',
-    project: '',
-  };
+  // static defaultProps = {
+  //   id: uuidv4(),
+  //   title: '',
+  //   project: '',
+  // };
 
   constructor(props) {
     super(props);

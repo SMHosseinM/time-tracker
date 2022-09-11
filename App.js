@@ -62,7 +62,7 @@ export default class App extends React.Component {
           isUpdate = !isUpdate;
 
           return {
-            ...item,
+            ...timer,
             title,
             project
           };
@@ -73,7 +73,7 @@ export default class App extends React.Component {
 
     if (!isUpdate) {
       this.setState({
-        timers: [item, ...timers]
+        timers: [newTimer(item), ...timers]
       })
     }
   }
